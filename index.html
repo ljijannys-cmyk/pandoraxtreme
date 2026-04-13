@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pandora Xtreme</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family: 'Poppins', sans-serif;
+  background: url('Fondo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color:white;
+  overflow-x:hidden;
+}
+
+.logo{
+  width:630px;
+  display:block;
+  margin:40px auto 10px;
+  transition: filter 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.logo:hover{
+  transform: scale(1.03);
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.6))
+          drop-shadow(0 0 16px rgba(0,0,0,0.4));
+}
+
+/* BOTON CARACOLA */
+.contact-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:70px;
+  cursor:pointer;
+  z-index:1000;
+  transition: transform 0.4s ease;
+}
+
+.contact-btn:hover{
+  transform: scale(1.15) rotate(8deg);
+}
+
+/* CAJA CONTACTO */
+.contact-box{
+  display:none;
+  position:fixed;
+  top:90px;
+  right:20px;
+  background:rgba(0,0,0,0.9);
+  padding:15px;
+  border-radius:15px;
+  z-index:1000;
+}
+
+/* MENU */
+.menu{
+  position:relative;
+  height:200px;
+}
+
+.menu img{
+  position:absolute;
+  width:120px;
+  cursor:pointer;
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s, filter 0.3s, box-shadow 0.3s;
+}
+
+.menu img:hover{
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 15px #00eaff);
+  box-shadow: 0 0 25px #00eaff, 0 0 50px rgba(0,234,255,0.6);
+}
+
+.info{ left:15%; top:40px; }
+.exp{ left:30%; top:0px; }
+.hist{ left:45%; top:40px; }
+.gal{ left:60%; top:0px; }
+.res{ left:75%; top:40px; }
+
+@keyframes float{
+  0%,100%{ transform: translateY(0);} 
+  50%{ transform: translateY(-10px);} 
+}
+
+.section{
+  display:none;
+  margin:40px auto;
+  padding:25px;
+  width:85%;
+  background: rgba(0,0,0,0.75);
+  border-radius:20px;
+}
+
+/* HISTORIA */
+.historia-box{
+  display:flex;
+  align-items:center;
+  gap:30px;
+}
+
+.historia-box img{
+  width:300px;
+  border-radius:15px;
+}
+
+.historia-box p{
+  font-size:20px;
+  line-height:1.6;
+}
+
+/* GALERIA MOSAICO */
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+  gap:10px;
+}
+
+.gallery img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal img{
+  max-width:90%;
+}
+
+/* EXPERIENCIAS */
+.exp-container{
+  text-align:center;
+}
+
+.exp-item{
+  display:inline-block;
+  width:220px;
+  margin:10px;
+}
+
+.exp-item img, .exp-item video{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.exp-item span{
+  display:block;
+  margin-top:5px;
+  background:#00eaff;
+  color:black;
+  padding:5px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.exp-item p{
+  font-size:14px;
+}
+
+/* RESEÑAS */
+.review{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.review img{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* ESTRELLAS */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+
+.star{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:#00eaff;
+  border-radius:50%;
+  animation: blink 2s infinite alternate;
+}
+
+@keyframes blink{
+  from{opacity:0.2;} 
+  to{opacity:1;} 
+}
+/* BOTON CARACOLA + TEXTO */
+.contact-btn{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:90px; /* 👈 súbelo un poquito para que se vea el texto */
+  cursor:pointer;
+  z-index:1000;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.contact-btn:hover{
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 10px #00eaff);
+}
+.contact-wrapper span{
+  font-size:14px;
+  color:#00eaff;
+  text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff;
+}</style>
+</head>
+
+<body>
+
+<audio id="audio" src="audio pandora.mp3"></audio>
+<audio id="clickSound" src="click.mp3"></audio>
+
+<div class="stars" id="stars"></div>
+
+<img src="Logo.png" class="logo">
+
+<!-- BOTON CARACOLA -->
+<img src="caracola.png" class="contact-btn" onclick="toggleContact()">
+<div class="menu">
+<img src="Boton informacion.png" class="info" onclick="show('info')">
+<img src="Boton experiencias.png" class="exp" onclick="show('exp')">
+<img src="Boton historia.png" class="hist" onclick="show('hist')">
+<img src="Boton galeria.png" class="gal" onclick="show('gal')">
+<img src="Boton reseñas.png" class="res" onclick="show('res')">
+</div>
+
+<!-- INFO -->
+<div id="info" class="section">
+<h2>Información</h2>
+<p>
+Adéntrate en un mundo que parece salido de otro planeta.
+En los bosques de Pandora, en Santander, la naturaleza cobra vida entre cavernas milenarias, gigantes formaciones rocosas y senderos envueltos en misterio. Cada paso es una aventura: desciende a lo profundo, explora lo desconocido y siente la conexión con un entorno único en Colombia.
+
+No es solo un destino… es una experiencia que tienes que vivir.
+</p>
+
+<iframe src="https://www.google.com/maps?q=6.0754784,-73.8368378&output=embed" width="100%" height="300" style="border-radius:15px;"></iframe>
+</div>
+
+<!-- EXPERIENCIAS -->
+<div id="exp" class="section">
+<h2>Experiencias</h2>
+
+<div class="exp-container">
+
+<div class="exp-item">
+<video controls>
+<source src="Video Pandora.mp4">
+</video>
+<span>Canyoning</span>
+<p>Desciende entre cascadas y siente la adrenalina pura.</p>
+</div>
+
+<div class="exp-item">
+<img src="espeleologia.jpg">
+<span>Espeleología</span>
+<p>Explora cavernas ocultas llenas de misterio.</p>
+</div>
+
+<div class="exp-item">
+<img src="Senderismo.jpg">
+<span>Senderismo</span>
+<p>Recorre senderos rodeados de naturaleza viva.</p>
+</div>
+
+</div>
+</div>
+
+<!-- HISTORIA -->
+<div id="hist" class="section">
+<h2>Historia</h2>
+<div class="historia-box">
+<img src="historia.png">
+<p>En el año 2019, Elver Quitián exploraba las montañas del municipio de El Peñón sin imaginar que estaba a punto de descubrir uno de los paisajes más sorprendentes de la región. Según la historia, fue su perro quien, guiándolo entre la vegetación, lo llevó accidentalmente hasta este lugar oculto. Ante sus ojos apareció un escenario único: enormes formaciones rocosas, bosques cubiertos de musgo y cavernas profundas que parecían sacadas de otro mundo. Con el tiempo, este hallazgo comenzó a atraer a más exploradores y visitantes, quienes quedaron asombrados por su belleza. Así, gracias al trabajo de la comunidad local, guías y aventureros, el lugar se transformó en un destino turístico. Su apariencia exótica llevó a que fuera conocido como el “Avatar colombiano”.</p>
+</div>
+</div>
+
+<!-- GALERIA -->
+<div id="gal" class="section gallery">
+<img src="1.jpeg" onclick="openModal(this.src)">
+<img src="2.jpeg" onclick="openModal(this.src)">
+<img src="3.jpeg" onclick="openModal(this.src)">
+<img src="4.jpeg" onclick="openModal(this.src)">
+<img src="5.jpeg" onclick="openModal(this.src)">
+<img src="6.jpeg" onclick="openModal(this.src)">
+</div>
+
+<!-- RESEÑAS -->
+<div id="res" class="section">
+<h2>Reseñas</h2>
+
+<div class="review">
+<img src="1.png">
+<p><strong>Laura Gómez</strong><br>Increíble lugar, parece otro planeta. ⭐⭐⭐⭐⭐</p>
+</div>
+
+<div class="review">
+<img src="2.png">
+<p><strong>Carlos Ruiz</strong><br>La experiencia en las cavernas fue única. ⭐⭐⭐⭐⭐</p>
+</div>
+
+<div class="review">
+<img src="3.png">
+<p><strong>María Torres</strong><br>Demasiado hermoso, volvería sin pensarlo. ⭐⭐⭐⭐⭐</p>
+</div>
+
+<div class="review">
+<img src="4.png">
+<p><strong>Juan Pérez</strong><br>Muy bien organizado y paisajes brutales. ⭐⭐⭐⭐⭐</p>
+</div>
+
+<div class="review">
+<img src="5.png">
+<p><strong>Sofía Herrera</strong><br>Una aventura que todos deberían vivir. ⭐⭐⭐⭐⭐</p>
+</div>
+
+</div>
+
+<!-- CONTACTO -->
+<div class="contact-box" id="contactBox">
+<strong>Síguenos</strong><br>
+📸 @pandora.xtreme<br>
+🎵 @pandora.xtreme<br>
+🐦 @PandoraXtreme<br><br>
+
+<strong>Contacto</strong><br>
+📧 pandoraxtreme@gmail.com<br>
+📱 3003214050
+</div>
+
+<div id="modal" class="modal" onclick="closeModal()">
+<img id="imgModal">
+</div>
+
+<script>
+function show(id){
+ document.querySelectorAll('.section').forEach(s=>s.style.display='none');
+ document.getElementById(id).style.display='block';
+}
+
+function openModal(src){
+ document.getElementById('modal').style.display='flex';
+ document.getElementById('imgModal').src=src;
+}
+
+function closeModal(){
+ document.getElementById('modal').style.display='none';
+}
+
+// estrellas
+for(let i=0;i<80;i++){
+ let star=document.createElement('div');
+ star.className='star';
+ star.style.top=Math.random()*100+'%';
+ star.style.left=Math.random()*100+'%';
+ document.getElementById('stars').appendChild(star);
+}
+
+// audio una sola vez
+let started=false;
+document.body.addEventListener('click',()=>{
+ if(!started){
+   started=true;
+   document.getElementById('audio').play().catch(()=>{});
+ }
+});
+
+// contacto
+function toggleContact(){
+ let box = document.getElementById('contactBox');
+ box.style.display = box.style.display === 'block' ? 'none' : 'block';
+
+ let sound = document.getElementById('clickSound');
+ if(sound){
+   sound.currentTime = 0;
+   sound.play().catch(()=>{});
+ }
+}
+</script>
+
+</body>
+</html>
