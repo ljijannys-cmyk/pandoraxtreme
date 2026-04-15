@@ -244,7 +244,24 @@ body{
 
 <div class="stars" id="stars"></div>
 
-<img src="logo.png" class="logo">
+<img src="logo.png" class="logo" onclick="toggleLogoInfo()">
+<div id="logoInfo" class="section" style="text-align:center;">
+  <img src="pandora.png" style="width:900px; border-radius:15px; margin-bottom:15px;">
+  
+  <h2>Pandora Xtreme</h2>
+  
+  <p>
+    En Pandora Xtreme, nuestra identidad nace en las profundidades de la Cueva La Tronera, un santuario geológico donde el tiempo se detuvo para preservar los secretos del planeta. El amonite en nuestro logo no es solo un símbolo; es el testimonio de un pasado marino que hoy descansa a miles de metros sobre el nivel del mar, recordándonos que El Peñón, Santander, es un libro abierto de la historia de la Tierra.
+  </p>
+
+  <p>
+    La importancia de este destino trasciende la aventura: es un epicentro paleontológico de valor mundial donde se han documentado hallazgos de megafauna del Pleistoceno y fósiles marinos del Cretácico.
+  </p>
+
+  <p>
+    Somos los guardianes de este "Avatar Colombiano", un ecosistema kárstico único donde la ciencia y la exploración convergen para ofrecer una experiencia que no solo desafía los límites físicos, sino que conecta al viajero con la majestuosidad de la evolución biológica y geológica de nuestro territorio.
+  </p>
+</div>
 
 <!-- BOTON CARACOLA -->
 <img src="caracola.png" class="contact-btn" onclick="toggleContact()">
@@ -408,6 +425,22 @@ function toggleContact(){
    sound.currentTime = 0;
    sound.play().catch(()=>{});
  }
+}
+function toggleLogoInfo(){
+  let section = document.getElementById('logoInfo');
+
+  if(section.style.display === 'block'){
+    section.style.display = 'none';
+  } else {
+    document.querySelectorAll('.section').forEach(s => s.style.display='none');
+    section.style.display = 'block';
+  }
+
+  let sound = document.getElementById('clickSound');
+  if(sound){
+    sound.currentTime = 0;
+    sound.play().catch(()=>{});
+  }
 }
 </script>
 
